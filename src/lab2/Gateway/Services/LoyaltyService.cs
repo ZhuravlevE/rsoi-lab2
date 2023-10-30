@@ -6,10 +6,11 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Gateway.Controllers;
 using Microsoft.Extensions.Logging;
+using Gateway.ServiceInterfaces;
 
 namespace Gateway.Services
 {
-    public class LoyaltyService
+    public class LoyaltyService : ILoyaltyService
     {
         private readonly HttpClient _httpClient;
         

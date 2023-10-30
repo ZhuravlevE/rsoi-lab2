@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using Gateway.ServiceInterfaces;
 
 namespace Gateway.Controllers
 {
@@ -15,12 +16,12 @@ namespace Gateway.Controllers
     public class GatewayController : ControllerBase
     {
         private readonly ILogger<GatewayController> _logger;
-        private readonly ReservationService _reservationsService;
-        private readonly PaymentService _paymentsService;
-        private readonly LoyaltyService _loyaltyService;
+        private readonly IReservationService _reservationsService;
+        private readonly IPaymentService _paymentsService;
+        private readonly ILoyaltyService _loyaltyService;
 
-        public GatewayController(ILogger<GatewayController> logger, ReservationService reservationsService,
-            PaymentService paymentsService, LoyaltyService loyaltyService)
+        public GatewayController(ILogger<GatewayController> logger, IReservationService reservationsService,
+            IPaymentService paymentsService, ILoyaltyService loyaltyService)
         {
             _logger = logger;
             _reservationsService = reservationsService;
@@ -276,7 +277,7 @@ namespace Gateway.Controllers
 
             var updateReservationTask = _reservationsService.DeleteReservationAsync(reservation.ReservationUid);
 
-            var updatePaymentTask = _paymentsService.DeletePaymentByUidAsync(reservation.PaymentUid);
+            var updatePaymentTask = _paymentsService.CancelPaymentByUidAsync(reservation.PaymentUid);
 
             var updateLoyaltyTask = _loyaltyService.DeleteLoyaltyByUsernameAsync(xUserName);
 

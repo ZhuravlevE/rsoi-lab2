@@ -3,10 +3,11 @@ using System;
 using Gateway.Models;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Gateway.ServiceInterfaces;
 
 namespace Gateway.Services
 {
-    public class PaymentService
+    public class PaymentService : IPaymentService
     {
         private readonly HttpClient _httpClient;
 
@@ -24,7 +25,7 @@ namespace Gateway.Services
             return response;
         }
 
-        public async Task<Payment?> DeletePaymentByUidAsync(Guid paymentUid)
+        public async Task<Payment?> CancelPaymentByUidAsync(Guid paymentUid)
         {
             using var req = new HttpRequestMessage(HttpMethod.Delete, $"api/v1/payments/{paymentUid}");
             using var res = await _httpClient.SendAsync(req);
